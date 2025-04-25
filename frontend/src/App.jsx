@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import SellerDashboard from "./pages/SellerDashboard";
-
+import BoardingList from "./components/BoardingList";
 
 export default function App() {
   return (
@@ -14,6 +14,8 @@ export default function App() {
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/register" element={<RegisterPage/>}/>
         <Route path="/sellerdashboard" element={<SellerDashboard/>}/>
+        <Route path="/boardings" element={<BoardingList />} />
+
       
       </Routes>
     </Router>
