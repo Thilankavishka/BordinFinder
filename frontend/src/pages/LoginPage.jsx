@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -26,14 +28,20 @@ export default function LoginPage() {
       body: JSON.stringify(formData),
     });
 
-    const result = await response.text();
+   const result = await response.json();
+if (response.ok) {
+  alert("Login successful");
+  if (result.role === "user") {
+    navigate("/userdashboard");
+  } else if (result.role === "seller") {
+    navigate("/sellerdashboard");
+  } else {
+    alert("Unknown role: " + result.role);
+  }
+} else {
+  alert("Login failed: " + result.message);
+}
 
-    if (response.ok) {
-      alert("Login successful");
-      // Redirect user to dashboard or home
-    } else {
-      alert("Login failed: " + result);
-    }
   } catch (error) {
     console.error("Error:", error);
     alert("Something went wrong!");

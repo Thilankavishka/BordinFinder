@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000") // Adjust if frontend is deployed elsewhere
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
     @Autowired
@@ -25,15 +27,21 @@ public class AuthController {
         Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
 
         if (userOptional.isEmpty()) {
-            return ResponseEntity.status(401).body("Invalid email or password");
+            return ResponseEntity.status(401).body(Map.of("message", "Invalid email or password"));
         }
 
         User user = userOptional.get();
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            return ResponseEntity.status(401).body("Invalid email or password");
+            return ResponseEntity.status(401).body(Map.of("message", "Invalid email or password"));
         }
 
-        return ResponseEntity.ok("Login successful");
+        // Return a proper JSON response with role, email, etc.
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Login successful");
+        response.put("email", user.getEmail());
+        response.put("role", user.getRole()); // Ensure role is available in User entity
+
+        return ResponseEntity.ok(response);
     }
 }
