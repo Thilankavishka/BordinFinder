@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SellerDashboard from "./pages/SellerDashboard";
 import BoardingList from "./components/BoardingList";
 import UserDashboard from "./pages/UsrDashboard";
+import AddBoarding from "./pages/AddBoarding";
 
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/sellerdashboard" element={<SellerDashboard/>}/>
         <Route path="/boardings" element={<BoardingList />} />
         <Route path="/userdashboard" element={<UserDashboard/>}/>
+        <Route path="/addbordin" element={<AddBoarding/>}/>
       </Routes>
     </Router>
   );
